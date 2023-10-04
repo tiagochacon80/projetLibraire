@@ -12,7 +12,7 @@ public class Livre {
         this.titre = titre;
         this.auteur = auteur;
         this.ISBN = ISBN;
-        this.quantite = quantite;
+        setQuantite(quantite);
     }
 
     public String getTitre() {
@@ -37,21 +37,27 @@ public class Livre {
 
     //Setter pour quantite avec validation
     public void setQuantite(int quantite) {
-        if(quantite >= 0) {
-            this.quantite = quantite;
+        if (quantite < 0) {
+            System.out.println("La quantité n'est peux pas etre moins que 0.");
         } else {
-            throw new IllegalArgumentException("La quantité ne peut pas être négative.");
+            this.quantite = quantite;
         }
     }
 
     public boolean emprunter(int quantiteAEmprunter) {
-        if (quantiteAEmprunter <= quantite && quantiteAEmprunter > 0) {
-            quantite -= quantiteAEmprunter;  // Subtrai a quantidade a emprestar da quantite disponível
-            quantiteEmpruntee += quantiteAEmprunter;  // Adiciona a quantidade a emprestar à quantiteEmpruntee
-            return true;
+        if (quantiteAEmprunter <= 0) {
+            System.out.println("La quantité à emprunter doit être positive.");
+            return false;
         }
-        return false;
+        if (quantiteAEmprunter > quantite) {
+            System.out.println("Il n'y a pas assez de livres disponibles pour emprunter cette quantité.");
+            return false;
+        }
+        quantite -= quantiteAEmprunter;  // Subtrai a quantidade a emprestar da quantite disponível
+        quantiteEmpruntee += quantiteAEmprunter;  // Adiciona a quantidade a emprestar à quantiteEmpruntee
+        return true;
     }
+
 
 
     /*public boolean rendre(){
